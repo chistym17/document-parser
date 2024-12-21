@@ -4,7 +4,11 @@ import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiUploadCloud, FiFile, FiX } from 'react-icons/fi';
 
-export default function FileUpload() {
+interface FileUploadProps {
+  onSuccess: (file: File) => void;
+}
+
+export default function FileUpload({ onSuccess }: FileUploadProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -20,9 +24,9 @@ export default function FileUpload() {
     onDrop,
     accept: {
       'application/pdf': ['.pdf'],
-      'application/msword': ['.doc'],
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
-      'text/plain': ['.txt']
+      'image/png': ['.png'],
+      'image/jpeg': ['.jpg', '.jpeg'],
+      'image/tiff': ['.tiff']
     }
   });
 
@@ -30,9 +34,14 @@ export default function FileUpload() {
     if (files.length === 0) return;
 
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 2000)); 
-    setLoading(false);
-    setFiles([]);
+    try {
+      onSuccess(files[0]);
+      setFiles([]);
+    } catch (error) {
+      console.error('Error handling file:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -60,7 +69,7 @@ export default function FileUpload() {
               Drag & drop your files here, or click to select files
             </p>
             <p className="text-sm text-gray-500 mt-1">
-              Supported formats: PDF, DOC, DOCX, TXT
+              Supported formats: PDF, PNG, JPG, JPEG, TIFF
             </p>
           </div>
 
