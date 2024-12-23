@@ -50,5 +50,34 @@ export const handleFileProcessing = async (
       console.error('Error during summarization:', error);
       alert(error.response?.data?.detail || 'Error processing file');
     }
+  } else if (actionId === 'sentiment') {
+    try {
+      const formData = new FormData();
+      if (!uploadedFile) return;
+      formData.append('file', uploadedFile);
+      
+      const extractionResponse = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (extractionResponse.data && extractionResponse.data.status === 'success') {
+        const sentimentResponse = await axios.post('http://localhost:8000/api/sentiment/analyze-sentiment', {
+          text: extractionResponse.data.text
+        });
+
+        if (sentimentResponse.data && sentimentResponse.data.status === 'success') {
+          setExtractedContent(
+            `Document Sentiment: ${sentimentResponse.data.sentiment}\n` +
+            `Confidence Score: ${(sentimentResponse.data.confidence * 100).toFixed(2)}%\n` +
+            `Rating: ${sentimentResponse.data.score}/5`
+          );
+        }
+      }
+    } catch (error: any) {
+      console.error('Error during sentiment analysis:', error);
+      alert(error.response?.data?.detail || 'Error analyzing sentiment');
+    }
   }
 }; 
