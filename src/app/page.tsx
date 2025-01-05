@@ -6,6 +6,9 @@ import FileUpload from '@/components/FileUpload';
 import DocumentActions from '@/components/DocumentActions';
 import ExtractedContent from '@/components/ExtractedContent';
 import { handleFileProcessing } from '@/utils/documentProcessing';
+import Features from '@/components/Features';
+// import HowItWorks from '@/components/HowItWorks';
+// import Footer from '@/components/Footer';
 
 export default function Home() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -17,11 +20,11 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      <section className="h-screen">
-        <Hero />
-      </section>
+      <Hero />
+      <Features />
+      {/* <HowItWorks /> */}
       {!uploadedFile ? (
-        <section className="h-screen">
+        <section className="py-24 bg-gray-50">
           <FileUpload onSuccess={(file) => setUploadedFile(file)} />
         </section>
       ) : extractedContent ? (
@@ -40,6 +43,7 @@ export default function Home() {
           />
         </section>
       )}
+      {/* <Footer /> */}
     </main>
   );
 }
