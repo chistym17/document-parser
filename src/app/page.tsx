@@ -9,13 +9,27 @@ import { handleFileProcessing } from '@/utils/documentProcessing';
 import Features from '@/components/Features';
 import HowItWorks from '@/components/HowItWorks';
 import Footer from '@/components/Footer';
+import ExtractedImages from '@/components/ExtractedImages';
 
 export default function Home() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [extractedContent, setExtractedContent] = useState<string | null>(null);
+  const [extractedContent, setExtractedContent] = useState<any>(null);
+  const [contentType, setContentType] = useState<'text' | 'images' | null>(null);
 
   const resetExtractedContent = () => {
     setExtractedContent(null);
+    setContentType(null);
+  };
+
+  const handleProcessing = async (actionId: string) => {
+    try {
+      if (uploadedFile) {
+        setContentType(actionId === 'extract-images' ? 'images' : 'text');
+        await handleFileProcessing(actionId, uploadedFile, setExtractedContent);
+      }
+    } catch (error) {
+      console.error('Error processing file:', error);
+    }
   };
 
   return (
@@ -28,18 +42,26 @@ export default function Home() {
           <FileUpload onSuccess={(file) => setUploadedFile(file)} />
         </section>
       ) : extractedContent ? (
-        <section className="h-screen">
-          <ExtractedContent 
-            content={extractedContent}
-            fileName={uploadedFile.name}
-            onBack={resetExtractedContent}
-          />
+        <section className="min-h-screen">
+          {contentType === 'images' ? (
+            <ExtractedImages
+              images={extractedContent}
+              fileName={uploadedFile.name}
+              onBack={resetExtractedContent}
+            />
+          ) : (
+            <ExtractedContent
+              content={extractedContent}
+              fileName={uploadedFile.name}
+              onBack={resetExtractedContent}
+            />
+          )}
         </section>
       ) : (
-        <section className="h-screen">
-          <DocumentActions 
-            fileName={uploadedFile.name} 
-            onProcessing={(actionId) => handleFileProcessing(actionId, uploadedFile, setExtractedContent)}
+        <section className="min-h-screen">
+          <DocumentActions
+            fileName={uploadedFile.name}
+            onProcessing={handleProcessing}
           />
         </section>
       )}

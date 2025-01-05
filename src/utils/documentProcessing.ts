@@ -7,9 +7,9 @@ export const handleFileProcessing = async (
 ) => {
   if (actionId === 'extract-text') {
     try {
-      const formData = new FormData();
       if (!uploadedFile) return;
       
+      const formData = new FormData();
       formData.append('file', uploadedFile);
       
       const response = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
@@ -27,8 +27,8 @@ export const handleFileProcessing = async (
     }
   } else if (actionId === 'summarize') {
     try {
-      const formData = new FormData();
       if (!uploadedFile) return;
+      const formData = new FormData();
       formData.append('file', uploadedFile);
       
       const extractionResponse = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
@@ -52,8 +52,8 @@ export const handleFileProcessing = async (
     }
   } else if (actionId === 'sentiment') {
     try {
-      const formData = new FormData();
       if (!uploadedFile) return;
+      const formData = new FormData();
       formData.append('file', uploadedFile);
       
       const extractionResponse = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
@@ -81,8 +81,8 @@ export const handleFileProcessing = async (
     }
   } else if (actionId === 'key-points') {
     try {
-      const formData = new FormData();
       if (!uploadedFile) return;
+      const formData = new FormData();
       formData.append('file', uploadedFile);
       
       const extractionResponse = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
@@ -103,9 +103,31 @@ export const handleFileProcessing = async (
           setExtractedContent(keywordResponse.data.key_points);
         }
       }
+      
     } catch (error: any) {
       console.error('Error during keyword extraction:', error);
       alert(error.response?.data?.detail || 'Error extracting keywords');
+    }
+  } else if (actionId === 'extract-images') {
+    try {
+      if (!uploadedFile) return;
+      const formData = new FormData();
+      formData.append('file', uploadedFile);
+
+      const response = await fetch('http://localhost:8000/api/extraction/extract-images', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to extract images');
+      }
+
+      const data = await response.json();
+      setExtractedContent(data.images);
+    } catch (error) {
+      console.error('Error processing file:', error);
+      throw error;
     }
   }
 }; 
