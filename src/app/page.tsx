@@ -10,11 +10,12 @@ import Features from '@/components/Features';
 import HowItWorks from '@/components/HowItWorks';
 import Footer from '@/components/Footer';
 import ExtractedImages from '@/components/ExtractedImages';
+import ExtractedLinks from '@/components/ExtractedLinks';
 
 export default function Home() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [extractedContent, setExtractedContent] = useState<any>(null);
-  const [contentType, setContentType] = useState<'text' | 'images' | null>(null);
+  const [contentType, setContentType] = useState<'text' | 'images' | 'links' | null>(null);
 
   const resetExtractedContent = () => {
     setExtractedContent(null);
@@ -43,7 +44,12 @@ export default function Home() {
         </section>
       ) : extractedContent ? (
         <section className="min-h-screen">
-          {contentType === 'images' ? (
+          {contentType === 'links' ? (
+            <ExtractedLinks
+              extractedText={extractedContent.text}
+              onBack={resetExtractedContent}
+            />
+          ) : contentType === 'images' ? (
             <ExtractedImages
               images={extractedContent}
               fileName={uploadedFile.name}

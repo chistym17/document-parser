@@ -3,7 +3,7 @@ import axios from 'axios';
 export const handleFileProcessing = async (
   actionId: string, 
   uploadedFile: File | null,
-  setExtractedContent: (content: string | null) => void
+  setExtractedContent: (content: string | { type: string; text: string } | null) => void
 ) => {
   if (actionId === 'extract-text') {
     try {
@@ -107,6 +107,34 @@ export const handleFileProcessing = async (
     } catch (error: any) {
       console.error('Error during keyword extraction:', error);
       alert(error.response?.data?.detail || 'Error extracting keywords');
+    }
+  } else if (actionId === 'extract-links') {
+    try {
+      if (!uploadedFile) return;
+      const formData = new FormData();
+      formData.append('file', uploadedFile);
+      
+      const extractionResponse = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (extractionResponse.data && extractionResponse.data.status === 'success') {
+        const linksResponse = await axios.post('http://localhost:8000/api/extraction/extract-links', {
+          text: extractionResponse.data.text
+        });
+
+        if (linksResponse.data && linksResponse.data.status === 'success') {
+          setExtractedContent({
+            type: 'links',
+            text: extractionResponse.data.text
+          });
+        }
+      }
+    } catch (error: any) {
+      console.error('Error during link extraction:', error);
+      alert(error.response?.data?.detail || 'Error extracting links');
     }
   } else if (actionId === 'extract-images') {
     try {
