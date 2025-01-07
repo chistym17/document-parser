@@ -44,21 +44,15 @@ export default function Home() {
         </section>
       ) : extractedContent ? (
         <section className="min-h-screen">
-          {contentType === 'links' ? (
+          {typeof extractedContent === 'object' && 'type' in extractedContent && extractedContent.type === 'links' ? (
             <ExtractedLinks
               extractedText={extractedContent.text}
               onBack={resetExtractedContent}
             />
-          ) : contentType === 'images' ? (
-            <ExtractedImages
-              images={extractedContent}
-              fileName={uploadedFile.name}
-              onBack={resetExtractedContent}
-            />
           ) : (
             <ExtractedContent
-              content={extractedContent}
-              fileName={uploadedFile.name}
+              content={extractedContent as string}
+              fileName={uploadedFile?.name || ''}
               onBack={resetExtractedContent}
             />
           )}

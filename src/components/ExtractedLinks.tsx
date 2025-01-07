@@ -32,7 +32,7 @@ export default function ExtractedLinks({ extractedText, onBack }: ExtractedLinks
 
   const extractLinks = async () => {
     try {
-      const response = await fetch('http://localhost:8000/extract-links', {
+      const response = await fetch('http://localhost:8000/api/extraction/extract-links', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export default function ExtractedLinks({ extractedText, onBack }: ExtractedLinks
       });
 
       if (!response.ok) throw new Error('Failed to extract links');
-      
+
       const data = await response.json();
       setLinkResults(data);
     } catch (err) {
@@ -96,7 +96,6 @@ export default function ExtractedLinks({ extractedText, onBack }: ExtractedLinks
             </div>
           </div>
 
-          {/* Valid Links */}
           <div className="space-y-4">
             <h3 className="text-xl font-semibold">Valid Links</h3>
             <div className="space-y-4">
@@ -104,9 +103,9 @@ export default function ExtractedLinks({ extractedText, onBack }: ExtractedLinks
                 <div key={index} className="border rounded-lg p-4 bg-white">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <a 
-                        href={link.url} 
-                        target="_blank" 
+                      <a
+                        href={link.url}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:text-blue-700 flex items-center gap-2"
                       >
@@ -121,7 +120,6 @@ export default function ExtractedLinks({ extractedText, onBack }: ExtractedLinks
             </div>
           </div>
 
-          {/* Invalid Links */}
           {linkResults.invalid_links.length > 0 && (
             <div className="space-y-4">
               <h3 className="text-xl font-semibold">Invalid Links</h3>
