@@ -1,6 +1,16 @@
 import Image from 'next/image';
 
 export default function Hero() {
+  const scrollToUpload = () => {
+    const uploadSection = document.querySelector('#upload-section');
+    uploadSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToHowItWorks = () => {
+    const howItWorksSection = document.querySelector('#how-it-works');
+    howItWorksSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="relative min-h-[85vh] flex items-center justify-center bg-gradient-to-b from-purple-50 to-white">
       <div className="container mx-auto px-6 mt-5">
@@ -12,10 +22,16 @@ export default function Hero() {
             Transform your documents into actionable insights. Upload any file and let our intelligent parser do the heavy lifting for you.
           </p>
           <div className="flex gap-4">
-            <button className="px-8 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold">
+            <button 
+              onClick={scrollToUpload}
+              className="px-8 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold"
+            >
               Upload Document
             </button>
-            <button className="px-8 py-4 border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 transition-colors font-semibold">
+            <button 
+              onClick={scrollToHowItWorks}
+              className="px-8 py-4 border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 transition-colors font-semibold"
+            >
               Learn More
             </button>
           </div>

@@ -59,13 +59,8 @@ const actions: Action[] = [
     icon: <FiMessageSquare className="w-6 h-6" />,
     title: 'Sentiment Analysis',
     description: 'Analyze the document sentiment'
-  },
-  {
-    id: 'statistics',
-    icon: <FiPieChart className="w-6 h-6" />,
-    title: 'Document Statistics',
-    description: 'Get detailed document statistics'
   }
+
 ];
 
 interface DocumentActionsProps {

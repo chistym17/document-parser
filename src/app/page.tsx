@@ -37,9 +37,11 @@ export default function Home() {
     <main className="min-h-screen">
       <Hero />
       <Features />
-      <HowItWorks />
+      <section id="how-it-works">
+        <HowItWorks />
+      </section>
       {!uploadedFile ? (
-        <section className="py-24 bg-gray-50">
+        <section id="upload-section" className="py-24 bg-gray-50">
           <FileUpload onSuccess={(file) => setUploadedFile(file)} />
         </section>
       ) : extractedContent ? (
