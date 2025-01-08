@@ -42,12 +42,7 @@ const actions: Action[] = [
     title: 'Extract Links',
     description: 'Get all links mentioned in the document'
   },
-  {
-    id: 'categorize',
-    icon: <FiTag className="w-6 h-6" />,
-    title: 'Categorize',
-    description: 'Categorize the document content'
-  },
+
   {
     id: 'key-points',
     icon: <FiKey className="w-6 h-6" />,
