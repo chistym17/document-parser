@@ -18,12 +18,7 @@ type Action = {
 };
 
 const actions: Action[] = [
-  {
-    id: 'summarize',
-    icon: <FiFileText className="w-6 h-6" />,
-    title: 'Summarize',
-    description: 'Get a concise summary of the document'
-  },
+
   {
     id: 'extract-text',
     icon: <FiList className="w-6 h-6" />,
@@ -43,19 +38,7 @@ const actions: Action[] = [
     description: 'Get all links mentioned in the document'
   },
 
-  {
-    id: 'key-points',
-    icon: <FiKey className="w-6 h-6" />,
-    title: 'Key Points',
-    description: 'Extract key points and insights'
-  },
-  {
-    id: 'sentiment',
-    icon: <FiMessageSquare className="w-6 h-6" />,
-    title: 'Sentiment Analysis',
-    description: 'Analyze the document sentiment'
-  }
-
+ 
 ];
 
 interface DocumentActionsProps {
@@ -90,13 +73,13 @@ export default function DocumentActions({ fileName, onProcessing }: DocumentActi
             Select what you'd like to do with "{fileName}"
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {actions.map((action) => (
               <button
                 key={action.id}
                 onClick={() => handleActionClick(action.id)}
                 disabled={loading}
-                className={`p-6 rounded-xl border-2 transition-all duration-200 flex flex-col items-center text-center
+                className={`p-8 rounded-xl border-2 transition-all duration-200 flex flex-col items-center text-center
                   ${selectedAction === action.id
                     ? 'border-purple-600 bg-purple-50'
                     : 'border-gray-200 hover:border-purple-600 hover:bg-purple-50'
@@ -104,7 +87,7 @@ export default function DocumentActions({ fileName, onProcessing }: DocumentActi
                   ${loading && selectedAction !== action.id ? 'opacity-50 cursor-not-allowed' : ''}
                 `}
               >
-                <div className={`p-3 rounded-full mb-4 
+                <div className={`p-4 rounded-full mb-5 
                   ${selectedAction === action.id
                     ? 'bg-purple-100 text-purple-600'
                     : 'bg-gray-100 text-gray-600'
@@ -112,8 +95,8 @@ export default function DocumentActions({ fileName, onProcessing }: DocumentActi
                 >
                   {action.icon}
                 </div>
-                <h3 className="font-semibold text-lg mb-2">{action.title}</h3>
-                <p className="text-sm text-gray-500">{action.description}</p>
+                <h3 className="font-semibold text-xl mb-3">{action.title}</h3>
+                <p className="text-base text-gray-500">{action.description}</p>
                 
                 {loading && selectedAction === action.id && (
                   <div className="mt-4">

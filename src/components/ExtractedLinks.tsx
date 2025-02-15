@@ -32,7 +32,7 @@ export default function ExtractedLinks({ extractedText, onBack }: ExtractedLinks
 
   const extractLinks = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/extraction/extract-links', {
+      const response = await fetch('https://document-parser-8vol.onrender.com/api/extraction/extract-links', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

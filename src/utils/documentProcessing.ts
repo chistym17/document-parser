@@ -12,7 +12,7 @@ export const handleFileProcessing = async (
       const formData = new FormData();
       formData.append('file', uploadedFile);
       
-      const response = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
+      const response = await axios.post('https://document-parser-8vol.onrender.com/api/extraction/upload-and-extract', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -31,14 +31,14 @@ export const handleFileProcessing = async (
       const formData = new FormData();
       formData.append('file', uploadedFile);
       
-      const extractionResponse = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
+      const extractionResponse = await axios.post('https://document-parser-8vol.onrender.com/api/extraction/upload-and-extract', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
       if (extractionResponse.data && extractionResponse.data.status === 'success') {
-        const summaryResponse = await axios.post('http://localhost:8000/api/summarize/summarize-text', {
+        const summaryResponse = await axios.post('https://document-parser-8vol.onrender.com/api/summarize/summarize-text', {
           text: extractionResponse.data.text
         });
 
@@ -56,14 +56,14 @@ export const handleFileProcessing = async (
       const formData = new FormData();
       formData.append('file', uploadedFile);
       
-      const extractionResponse = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
+      const extractionResponse = await axios.post('https://document-parser-8vol.onrender.com/api/extraction/upload-and-extract', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
       if (extractionResponse.data && extractionResponse.data.status === 'success') {
-        const sentimentResponse = await axios.post('http://localhost:8000/api/sentiment/analyze-sentiment', {
+        const sentimentResponse = await axios.post('https://document-parser-8vol.onrender.com/api/sentiment/analyze-sentiment', {
           text: extractionResponse.data.text
         });
 
@@ -85,14 +85,14 @@ export const handleFileProcessing = async (
       const formData = new FormData();
       formData.append('file', uploadedFile);
       
-      const extractionResponse = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
+        const extractionResponse = await axios.post('https://document-parser-8vol.onrender.com/api/extraction/upload-and-extract', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
       if (extractionResponse.data && extractionResponse.data.status === 'success') {
-        const keywordResponse = await axios.post('http://localhost:8000/api/extraction/extract-keywords', {
+        const keywordResponse = await axios.post('https://document-parser-8vol.onrender.com/api/extraction/extract-keywords', {
           text: extractionResponse.data.text
         }); 
 
@@ -114,16 +114,18 @@ export const handleFileProcessing = async (
       const formData = new FormData();
       formData.append('file', uploadedFile);
       
-      const extractionResponse = await axios.post('http://localhost:8000/api/extraction/upload-and-extract', formData, {
+      const extractionResponse = await axios.post('https://document-parser-8vol.onrender.com/api/extraction/upload-and-extract', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
       if (extractionResponse.data && extractionResponse.data.status === 'success') {
-        const linksResponse = await axios.post('http://localhost:8000/api/extraction/extract-links', {
+        const linksResponse = await axios.post('https://document-parser-8vol.onrender.com/api/extraction/extract-links', {
           text: extractionResponse.data.text
         });
+
+        console.log(linksResponse.data);
 
         if (linksResponse.data && linksResponse.data.status === 'success') {
           setExtractedContent({
@@ -142,7 +144,7 @@ export const handleFileProcessing = async (
       const formData = new FormData();
       formData.append('file', uploadedFile);
 
-      const response = await fetch('http://localhost:8000/api/extraction/extract-images', {
+      const response = await fetch('https://document-parser-8vol.onrender.com/api/extraction/extract-images', {
         method: 'POST',
         body: formData,
       });

@@ -19,7 +19,7 @@ export default function ExtractedImages({ images, fileName, onBack }: ExtractedI
 
   const handleDownload = async (imageId: string, format: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/extraction/get-image/${imageId}`);
+      const response = await fetch(`https://document-parser-8vol.onrender.com/api/extraction/get-image/${imageId}`);
       if (!response.ok) throw new Error('Failed to download image');
       
       const blob = await response.blob();
@@ -39,7 +39,7 @@ export default function ExtractedImages({ images, fileName, onBack }: ExtractedI
   const handleDelete = async (imageId: string) => {
     try {
       setDeletingImages(prev => new Set(prev).add(imageId));
-      const response = await fetch(`http://localhost:8000/api/extraction/delete-image/${imageId}`, {
+      const response = await fetch(`https://document-parser-8vol.onrender.com/api/extraction/delete-image/${imageId}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Failed to delete image');
@@ -81,7 +81,7 @@ export default function ExtractedImages({ images, fileName, onBack }: ExtractedI
             className="border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
           >
             <img
-              src={`http://localhost:8000/api/extraction/get-image/${image.image_id}`}
+              src={`https://document-parser-8vol.onrender.com/api/extraction/get-image/${image.image_id}`}
               alt={`Image from page ${image.page_number}`}
               className="w-full h-48 object-contain mb-4"
             />
